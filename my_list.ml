@@ -9,7 +9,12 @@ type 'a my_list =
 let rec print_list_int my_list =
   match my_list with
   | Empty -> ()
-  | Item (hd, tl) -> print_int hd ; print_string " " ; print_list_int tl
+  | Item (hd, tl) ->
+     begin
+       print_int hd;
+       print_string " ";
+       print_list_int tl;
+     end
 
 (* List.print str *)
 let rec print_list_str my_list =
@@ -62,7 +67,6 @@ let rev my_list =
     | Item (hd, tl) -> rev_in (Item (hd, t)) tl
   in rev_in Empty my_list
 
-
 (* List.append *)
 let append l1 l2 =
   let rec append_in nl = function
@@ -76,6 +80,13 @@ let rev_append l1 l2 =
     | Empty -> nl
     | Item (hd, tl) -> rev_append_in (Item (hd, nl)) tl
   in rev_append_in l2 l1
+
+(* List.flatten *)
+let flatten my_list =
+  let rec flatten_in elem = function
+    | Empty -> rev elem
+    | Item (hd, tl) -> flatten_in (rev_append hd elem) tl
+  in flatten_in Empty my_list
 
 (* List.iter *)
 let rec iter f my_list =
@@ -194,6 +205,14 @@ let q = rev_append a r;;
 print_list_int q;;
 print_endline "";;
 
+
+print_endline "Test flatten:";;
+let t = Item("a", Item("b", Item("c", Empty)));;
+let u = Item("d", Item("e", Item("f", Empty)));;
+let v = Item(t, Item(u, Empty));;
+let w = flatten v;;
+print_list_str w;;
+print_endline "";;
   
 print_endline "Test iter:";;
 iter print_int a;;
