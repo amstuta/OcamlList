@@ -53,18 +53,7 @@ module My_list =
 	| 0 -> (hd my_list)
 	| _ -> nth (tl my_list) (idx - 1)
 
-      
-    (* List.rev *)
-(*    let rec rev my_list =
-      let rec rev_in l = function
-	| Empty -> l
-	| Item (hd, tl) -> rev_in (Item (hd, l)) tl
-      in rev_in Empty my_list
-    ;;*)
-
-
-
-      (* List.iter *)
+    (* List.iter *)
     let rec iter f my_list =
       match my_list with
       | Empty -> ()
@@ -74,6 +63,7 @@ module My_list =
 	   iter f tl;
 	 end
 
+    (* List.fold_left *)
     let rec fold_left f a my_list =
       let rec fold_left_in i = function
 	| Empty -> i
@@ -90,6 +80,7 @@ module My_list =
 	   else false
 	 end
 
+    (* List.exists *)
     let rec exists f my_list =
       match my_list with
       | Empty -> false
@@ -98,6 +89,17 @@ module My_list =
 	   let b = f hd in
 	   if b = true then true
 	   else exists f tl
+	 end
+
+    (* List.mem *)
+    let rec mem a my_list =
+      match my_list with
+      | Empty -> false
+      | Item (hd, tl) ->
+	 begin
+	   let b = (a = hd) in
+	   if b = true then true
+	   else mem a tl
 	 end
   end
 
@@ -136,35 +138,29 @@ print_int h;;
 print_endline "";;
 let i = My_list.nth e 2;;
 print_endline i;;
-	
-  
-  (*
-let j = My_list.rev a;;
-print_list_int(j);;
-print_endline "";;
-   *)
   
 
 print_endline "Test iter:";;
 My_list.iter print_int a;;
 print_endline "";;
 
-(*
-print_endline "Test map:";;
-let j = My_list.map add_un a;;
-print_list_int j;;
-print_endline "";;
- *)
-
+  
 print_endline "Test fold_left:";;
 let k = My_list.fold_left add 9 a;;
 print_int k;;
 print_endline "";;
 
+  
 print_endline "Test for_all:";;
 let l = My_list.for_all diff_0 a;;
 print_endline (string_of_bool l);;  
 
+  
 print_endline "Test exists:";;
 let m = My_list.exists diff_0 a;;
 print_endline (string_of_bool m);;
+
+  
+print_endline "Test mem:";;
+print_endline (string_of_bool (My_list.mem 0 a));;
+print_endline (string_of_bool (My_list.mem 15 a));;
