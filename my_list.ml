@@ -101,6 +101,17 @@ module My_list =
 	   if b = true then true
 	   else mem a tl
 	 end
+
+    (* List.memq *)
+    let rec memq a my_list =
+      match my_list with
+      | Empty -> false
+      | Item (hd, tl) ->
+	 begin
+	   let b = (a == hd) in
+	   if b = true then true
+	   else memq a tl
+	 end
   end
 
 
@@ -164,3 +175,10 @@ print_endline (string_of_bool m);;
 print_endline "Test mem:";;
 print_endline (string_of_bool (My_list.mem 0 a));;
 print_endline (string_of_bool (My_list.mem 15 a));;
+
+print_endline "Test memq:";;
+let n = "salut";;
+let o = Item(n, Item("tout le monde", Empty));;
+print_endline (string_of_bool (My_list.memq n o));;
+print_endline (string_of_bool (My_list.memq "salut" o));;
+
