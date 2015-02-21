@@ -62,6 +62,21 @@ let rev my_list =
     | Item (hd, tl) -> rev_in (Item (hd, t)) tl
   in rev_in Empty my_list
 
+
+(* List.append *)
+let append l1 l2 =
+  let rec append_in nl = function
+    | Empty -> nl
+    | Item (hd, tl) -> append_in (Item (hd, nl)) tl
+  in append_in l2 (rev l1)
+
+(* List.rev_append *)
+let rev_append l1 l2 =
+  let rec rev_append_in nl = function
+    | Empty -> nl
+    | Item (hd, tl) -> rev_append_in (Item (hd, nl)) tl
+  in rev_append_in l2 l1
+
 (* List.iter *)
 let rec iter f my_list =
   match my_list with
@@ -78,7 +93,8 @@ let rec fold_left f a my_list =
     | Empty -> i
     | Item (hd, tl) -> fold_left_in (f  i hd) tl
   in fold_left_in a my_list
-		  
+
+(* List.for_all *)
 let rec for_all f my_list =
   match my_list with
   | Empty -> true
@@ -163,6 +179,19 @@ print_endline i;;
 print_endline "Test rev:";;
 let p = rev a;;
 print_list_int p;;
+print_endline "";;
+
+
+print_endline "Test append:";;
+let r = Item(4, Item(5, Item(6, Empty)));;
+let s = append a r;;
+print_list_int s;;
+print_endline "";;
+
+  
+print_endline "Test rev_append:";;
+let q = rev_append a r;;
+print_list_int q;;
 print_endline "";;
 
   
