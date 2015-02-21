@@ -54,7 +54,14 @@ let rec nth my_list idx =
     match idx with
     | 0 -> (hd my_list)
     | _ -> nth (tl my_list) (idx - 1)
-	       
+
+(* List.rev *)
+let rev my_list =
+  let rec rev_in t = function
+    | Empty -> t
+    | Item (hd, tl) -> rev_in (Item (hd, t)) tl
+  in rev_in Empty my_list
+
 (* List.iter *)
 let rec iter f my_list =
   match my_list with
@@ -151,13 +158,19 @@ print_int h;;
 print_endline "";;
 let i = nth e 2;;
 print_endline i;;
-  
 
+
+print_endline "Test rev:";;
+let p = rev a;;
+print_list_int p;;
+print_endline "";;
+
+  
 print_endline "Test iter:";;
 iter print_int a;;
 print_endline "";;
 
-  
+
 print_endline "Test fold_left:";;
 let k = fold_left add 9 a;;
 print_int k;;
