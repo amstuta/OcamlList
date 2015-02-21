@@ -26,6 +26,9 @@ let rec print_list_str my_list =
 (* Add a et b *)
 let add a b = a + b;;
 
+(* Add 1 *)
+let add_un a = a + 1;;
+
 (* Renvoie true si diff *)
 let diff_0 a = a <> 0;;
 
@@ -97,6 +100,13 @@ let rec iter f my_list =
        f hd;
        iter f tl;
      end
+
+(* List.map *)
+let map f my_list =
+  let rec map_in elem = function
+    | Empty -> rev elem
+    | Item (hd, tl) -> map_in (Item ((f hd), elem)) tl
+  in map_in Empty my_list
        
 (* List.fold_left *)
 let rec fold_left f a my_list =
@@ -149,7 +159,17 @@ let rec memq a my_list =
        else memq a tl
      end
 
-
+(* List.filter *)
+let filter f my_list =
+  let rec filter_in elem = function
+    | Empty -> rev elem
+    | Item (hd, tl) ->
+       begin
+	 let b = f hd in
+	 if b = true then filter_in (Item (hd, elem)) tl
+	 else filter_in elem tl
+       end
+  in filter_in Empty my_list
 
 
 let a = Item(0, Item(1, Item(2, Item(3, Empty))));;
@@ -213,12 +233,18 @@ let v = Item(t, Item(u, Empty));;
 let w = flatten v;;
 print_list_str w;;
 print_endline "";;
+
   
 print_endline "Test iter:";;
 iter print_int a;;
 print_endline "";;
 
 
+print_endline "Test map:";;
+let x = map add_un a;;
+print_list_int x;;
+print_endline "";;
+  
 print_endline "Test fold_left:";;
 let k = fold_left add 9 a;;
 print_int k;;
@@ -239,9 +265,15 @@ print_endline "Test mem:";;
 print_endline (string_of_bool (mem 0 a));;
 print_endline (string_of_bool (mem 15 a));;
 
+  
 print_endline "Test memq:";;
 let n = "salut";;
 let o = Item(n, Item("tout le monde", Empty));;
 print_endline (string_of_bool (memq n o));;
 print_endline (string_of_bool (memq "salut" o));;
 
+
+print_endline "Test filter:";;
+let y = filter diff_0 a;;
+print_list_int y;;
+print_endline "";;
