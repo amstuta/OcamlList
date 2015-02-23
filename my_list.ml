@@ -59,23 +59,20 @@ let diff_0 a = a <> 0;;
 
       
 (* List.length *)
-let rec length my_list =
-  match my_list with
-  | Empty -> 0
-  | Item (hd, tl) -> 1 + length (tl)
-				
+let rec length = function
+  | Empty	  -> 0
+  | Item (hd, tl) -> 1 + length tl
+		
 (* List.hd *)
-let rec hd my_list =
-  match my_list with
-  | Empty -> raise (Failure "hd")
+let rec hd = function
+  | Empty	  -> raise (Failure "hd")
   | Item (hd, tl) -> hd
-		       
+	       
 (* List.tl *)
-let rec tl my_list =
-  match my_list with
-  | Empty -> raise (Failure "tl")
+let rec tl = function
+  | Empty	  -> raise (Failure "tl")
   | Item (hd, tl) -> tl
-		       
+	       
 (* List.nth *)
 let rec nth my_list idx =
   let len = length my_list in
@@ -89,35 +86,34 @@ let rec nth my_list idx =
 (* List.rev *)
 let rev my_list =
   let rec rev_in t = function
-    | Empty -> t
+    | Empty	    -> t
     | Item (hd, tl) -> rev_in (Item (hd, t)) tl
   in rev_in Empty my_list
 
 (* List.append *)
 let append l1 l2 =
   let rec append_in nl = function
-    | Empty -> nl
+    | Empty	    -> nl
     | Item (hd, tl) -> append_in (Item (hd, nl)) tl
   in append_in l2 (rev l1)
 
 (* List.rev_append *)
 let rev_append l1 l2 =
   let rec rev_append_in nl = function
-    | Empty -> nl
+    | Empty	    -> nl
     | Item (hd, tl) -> rev_append_in (Item (hd, nl)) tl
   in rev_append_in l2 l1
 
 (* List.flatten *)
 let flatten my_list =
   let rec flatten_in elem = function
-    | Empty -> rev elem
+    | Empty	    -> rev elem
     | Item (hd, tl) -> flatten_in (rev_append hd elem) tl
   in flatten_in Empty my_list
 
 (* List.iter *)
-let rec iter f my_list =
-  match my_list with
-  | Empty -> ()
+let rec iter f = function
+  | Empty	  -> ()
   | Item (hd, tl) ->
      begin
        f hd;
@@ -127,21 +123,20 @@ let rec iter f my_list =
 (* List.map *)
 let map f my_list =
   let rec map_in elem = function
-    | Empty -> rev elem
+    | Empty	    -> rev elem
     | Item (hd, tl) -> map_in (Item ((f hd), elem)) tl
   in map_in Empty my_list
        
 (* List.fold_left *)
 let fold_left f a my_list =
   let rec fold_left_in i = function
-    | Empty -> i
+    | Empty	    -> i
     | Item (hd, tl) -> fold_left_in (f  i hd) tl
   in fold_left_in a my_list
 
 (* List.for_all *)
-let rec for_all f my_list =
-  match my_list with
-  | Empty -> true
+let rec for_all f = function
+  | Empty	  -> true
   | Item (hd, tl) ->
      begin
        let b = f hd in
@@ -150,9 +145,8 @@ let rec for_all f my_list =
      end
        
 (* List.exists *)
-let rec exists f my_list =
-  match my_list with
-  | Empty -> false
+let rec exists f = function
+  | Empty	  -> false
   | Item (hd, tl) ->
      begin
        let b = f hd in
@@ -161,9 +155,8 @@ let rec exists f my_list =
      end
        
 (* List.mem *)
-let rec mem a my_list =
-  match my_list with
-  | Empty -> false
+let rec mem a = function
+  | Empty	  -> false
   | Item (hd, tl) ->
      begin
        let b = (a = hd) in
@@ -172,9 +165,8 @@ let rec mem a my_list =
      end
 
 (* List.memq *)
-let rec memq a my_list =
-  match my_list with
-  | Empty -> false
+let rec memq a = function
+  | Empty	  -> false
   | Item (hd, tl) ->
      begin
        let b = (a == hd) in
@@ -185,7 +177,7 @@ let rec memq a my_list =
 (* List.filter *)
 let filter f my_list =
   let rec filter_in elem = function
-    | Empty -> rev elem
+    | Empty	    -> rev elem
     | Item (hd, tl) ->
        begin
 	 let b = f hd in
@@ -195,10 +187,9 @@ let filter f my_list =
   in filter_in Empty my_list
 
 (* List.mem_assoc *)
-let rec mem_assoc key my_list =
-  match my_list with
-  | Empty -> false
-  | Item (hd, tl)->
+let rec mem_assoc key = function
+  | Empty	  -> false
+  | Item (hd, tl) ->
      begin
        let a = (function (e, _) -> e) hd in
        if a = key then true
@@ -206,9 +197,8 @@ let rec mem_assoc key my_list =
      end
 
 (* List.assoc *)
-let rec assoc key my_list =
-  match my_list with
-  | Empty -> raise Not_found
+let rec assoc key = function
+  | Empty	  -> raise Not_found
   | Item (hd, tl) ->
      begin
        let a = (function (e, f) -> e) hd in
@@ -220,7 +210,7 @@ let rec assoc key my_list =
 (* List.split *)
 let split my_list =
   let rec split_in e f = function
-    | Empty -> ((rev e), (rev f))
+    | Empty	    -> ((rev e), (rev f))
     | Item (hd, tl) ->
        begin
 	 let a = (function (a, b) -> a) hd in
@@ -232,7 +222,7 @@ let split my_list =
 (* List.remove_assoc *)
 let remove_assoc key my_list =
   let rec remove_assoc_in e = function
-    | Empty -> rev e
+    | Empty	    -> rev e
     | Item (hd, tl) ->
        begin
 	 let a = (function (a, b) -> a) hd in
