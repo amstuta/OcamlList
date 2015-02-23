@@ -3,58 +3,6 @@ type 'a my_list =
   | Item of ('a * 'a my_list)
   | Empty
 
-      
-
-(* List.print int *)
-let rec print_list_int my_list =
-  match my_list with
-  | Empty -> ()
-  | Item (hd, tl) ->
-     begin
-       print_int hd;
-       print_string " ";
-       print_list_int tl;
-     end
-
-(* List.print str *)
-let rec print_list_str my_list =
-  match my_list with
-  | Empty -> ()
-  | Item (hd, tl) -> print_string hd ; print_string " " ; print_list_str tl
-
-(* Prints a tuple containing lists *)
-let print_tuple_of_list my_tuple =
-  let a = (function (a, b) -> a) my_tuple in
-  let b = (function (a, b) -> b) my_tuple in
-  print_list_int a;
-  print_endline "";
-  print_list_int b
-
-(* Prints a list containing tuples *)
-let rec print_list_of_tuple my_list =
-  match my_list with
-  | Empty -> ()
-  | Item (hd, tl) ->
-     begin
-       let a = (function (a, b) -> a) hd in
-       let b = (function (a, b) -> b) hd in
-       print_string "(";
-       print_int a;
-       print_string ", ";
-       print_int b;
-       print_string ")  ";
-       print_list_of_tuple tl
-     end
-
-(* Add a et b *)
-let add a b = a + b;;
-
-(* Add 1 *)
-let add_un a = a + 1;;
-
-(* Renvoie true si diff *)
-let diff_0 a = a <> 0;;
-
 
 
       
@@ -107,8 +55,8 @@ let rev_append l1 l2 =
 (* List.flatten *)
 let flatten my_list =
   let rec flatten_in elem = function
-    | Empty	    -> rev elem
-    | Item (hd, tl) -> flatten_in (rev_append hd elem) tl
+    | Empty	    -> elem
+    | Item (hd, tl) -> flatten_in (append elem hd) tl
   in flatten_in Empty my_list
 
 (* List.iter *)
@@ -231,6 +179,65 @@ let remove_assoc key my_list =
        end
   in remove_assoc_in Empty my_list
 
+
+
+
+
+
+
+
+
+
+(* List.print int *)
+let rec print_list_int = function
+  | Empty -> ()
+  | Item (hd, tl) ->
+     begin
+       print_int hd;
+       print_string " ";
+       print_list_int tl;
+     end
+
+(* List.print str *)
+let rec print_list_str = function
+  | Empty -> ()
+  | Item (hd, tl) -> print_string hd ; print_string " " ; print_list_str tl
+
+(* Prints a tuple containing lists *)
+let print_tuple_of_list my_tuple =
+  let a = (function (a, b) -> a) my_tuple in
+  let b = (function (a, b) -> b) my_tuple in
+  print_list_int a;
+  print_endline "";
+  print_list_int b
+
+(* Prints a list containing tuples *)
+let rec print_list_of_tuple my_list =
+  match my_list with
+  | Empty -> ()
+  | Item (hd, tl) ->
+     begin
+       let a = (function (a, b) -> a) hd in
+       let b = (function (a, b) -> b) hd in
+       print_string "(";
+       print_int a;
+       print_string ", ";
+       print_int b;
+       print_string ")  ";
+       print_list_of_tuple tl
+     end
+
+(* Add a et b *)
+let add a b = a + b;;
+
+(* Add 1 *)
+let add_un a = a + 1;;
+
+(* Renvoie true si diff *)
+let diff_0 a = a <> 0;;
+
+
+		     
 
 let main =
   let a = Item(0, Item(1, Item(2, Item(3, Empty)))) in
