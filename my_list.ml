@@ -87,8 +87,7 @@ let rec for_all f = function
   | Empty	  -> true
   | Item (hd, tl) ->
      begin
-       let b = f hd in
-       if b = true then for_all f tl
+       if (f hd) = true then for_all f tl
        else false
      end
        
@@ -97,8 +96,7 @@ let rec exists f = function
   | Empty	  -> false
   | Item (hd, tl) ->
      begin
-       let b = f hd in
-       if b = true then true
+       if (f hd) = true then true
        else exists f tl
      end
        
@@ -185,7 +183,7 @@ let remove_assoc key my_list =
 (* List.fold_right *)
 let fold_right f a my_list =
   fold_left f a (rev my_list)
-(*	    
+(*
 (* List.iter2 *)
 let rec iter2 f l1 l2 =
   let len1 = length l1 in
@@ -197,19 +195,17 @@ let rec iter2 f l1 l2 =
     | Item (hd, tl) ->
        begin
 	 f hd (hd l2);
-	 (*iter2 f tl (tl l2)*)
-	 iter2 f tl
+	 iter2 f tl (tl l2)
        end
  *)
-
 let map2 f l1 l2 =
   let len1 = length l1 in
   let len2 = length l2 in
-  if len1 <> len2 then raise (Invalid_argument "My_list.iter2")
+  if len1 <> len2 then raise (Invalid_argument "My_list.map2")
   else
     let rec map2_in elem = function
       | Empty  	      -> elem
-      | Item (hd, tl) -> map2_in (Item (hd, elem)) tl
+      | Item (hd, tl) -> map2_in (Item ((f hd (hd l2)), elem)) tl
     in map2_in Empty l1
 
 let partition f my_list =
@@ -224,4 +220,3 @@ let partition f my_list =
 	 else partition_in (lT, (Item (hd, lF))) tl
        end
   in partition_in (Empty, Empty) my_list
-
