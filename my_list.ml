@@ -126,8 +126,7 @@ let filter f my_list =
     | Empty	    -> rev elem
     | Item (hd, tl) ->
        begin
-	 let b = f hd in
-	 if b = true then filter_in (Item (hd, elem)) tl
+	 if (f hd) = true then filter_in (Item (hd, elem)) tl
 	 else filter_in elem tl
        end
   in filter_in Empty my_list
