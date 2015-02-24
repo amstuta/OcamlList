@@ -195,3 +195,10 @@ let main =
   print_list_int ((function (a,b) -> b) ah);
   print_endline "";
     
+  print_endline "Test mem_assq:";
+  let key = "s" in
+  let tpl = (key, 2) in
+  let l1 = Item(("a", 3), Item(tpl, Item(("b", 3), Empty))) in
+  let l2 = Item(("a", 3), Item(("s", 5), Empty)) in
+  print_endline (string_of_bool (mem_assq key l1));
+  print_endline (string_of_bool (mem_assq key l2));

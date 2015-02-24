@@ -219,3 +219,13 @@ let partition f my_list =
 	 else partition_in (lT, (Item (hd, lF))) tl
        end
   in partition_in (Empty, Empty) my_list
+
+(* List.mem_assq *)
+let rec mem_assq key = function
+  | Empty	  -> false
+  | Item (hd, tl) ->
+     begin
+       let a = (function (e, _) -> e) hd in
+       if a == key then true
+       else mem_assq key tl
+     end
