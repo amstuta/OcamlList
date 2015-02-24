@@ -183,31 +183,30 @@ let remove_assoc key my_list =
 (* List.fold_right *)
 let fold_right f a my_list =
   fold_left f a (rev my_list)
-(*
+
 (* List.iter2 *)
 let rec iter2 f l1 l2 =
-  let len1 = length l1 in
-  let len2 = length l2 in
-  if len1 <> len2 then raise (Invalid_argument "My_list.iter2")
-  else
-    match l1 with
-    | Empty	    -> ()
-    | Item (hd, tl) ->
+  if (length l1) <> (length l2) then raise (Invalid_argument "My_list.iter2")
+  else match l1 with
+    | Empty       -> ()
+    | Item (h, t) ->
        begin
-	 f hd (hd l2);
-	 iter2 f tl (tl l2)
+	 f h (hd l2);
+	 iter2 f t (tl l2);
        end
- *)
+
+(* List.map2 *)
 let map2 f l1 l2 =
   let len1 = length l1 in
   let len2 = length l2 in
   if len1 <> len2 then raise (Invalid_argument "My_list.map2")
   else
-    let rec map2_in elem = function
-      | Empty  	      -> elem
-      | Item (hd, tl) -> map2_in (Item ((f hd (hd l2)), elem)) tl
-    in map2_in Empty l1
+    let rec map2_in elem il2 = function
+      | Empty  	    -> rev elem
+      | Item (h, t) -> map2_in (Item ((f h (hd il2)), elem)) (tl il2) t
+    in map2_in Empty l2 l1
 
+(* List.partition *)
 let partition f my_list =
   let rec partition_in elem = function
     | Empty	    -> elem

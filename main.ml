@@ -39,6 +39,12 @@ let rec print_list_of_tuple my_list =
        print_list_of_tuple tl
      end
 
+let print_couple a b =
+  print_int a;
+  print_string " : ";
+  print_int b;
+  print_endline "";;
+
 (* Add a et b *)
 let add a b = a + b;;
 
@@ -47,7 +53,6 @@ let add_un a = a + 1;;
 
 (* Renvoie true si diff *)
 let diff_0 a = a <> 0;;
-
 
 
 let main =
@@ -170,3 +175,23 @@ let main =
   let ad = fold_right add 9 a in
   print_int ad;
   print_endline "";
+
+  print_endline "Test iter2:";
+  let ae = Item(1, Item(2, Item(3, Empty))) in
+  let af = Item(5, Item(6, Item(7, Empty))) in
+  iter2 print_couple ae af;
+
+  print_endline "Test map2:";
+  let ag = map2 add ae af in
+  print_list_int ag;
+  print_endline "";
+
+  print_endline "Test partition:";
+  let ah = partition diff_0 a in
+  print_string "  List true: ";
+  print_list_int ((function (a,b) -> a) ah);
+  print_endline "";
+  print_string "  List false: ";
+  print_list_int ((function (a,b) -> b) ah);
+  print_endline "";
+    
