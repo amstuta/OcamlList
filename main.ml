@@ -39,6 +39,22 @@ let rec print_list_of_tuple my_list =
        print_list_of_tuple tl
      end
 
+(* Prints a list containing tuples *)
+let rec print_list_of_tuple_str my_list =
+  match my_list with
+  | Empty -> ()
+  | Item (hd, tl) ->
+     begin
+       let a = (function (a, b) -> a) hd in
+       let b = (function (a, b) -> b) hd in
+       print_string "(";
+       print_string a;
+       print_string ", ";
+       print_int b;
+       print_string ")  ";
+       print_list_of_tuple_str tl
+     end
+
 let print_couple a b =
   print_int a;
   print_string " : ";
@@ -196,9 +212,17 @@ let main =
   print_endline "";
     
   print_endline "Test mem_assq:";
-  let key = "s" in
+  let key = "a" in
   let tpl = (key, 2) in
-  let l1 = Item(("a", 3), Item(tpl, Item(("b", 3), Empty))) in
-  let l2 = Item(("a", 3), Item(("s", 5), Empty)) in
+  let l1 = Item(("b", 3), Item(tpl, Item(("c", 3), Empty))) in
+  let l2 = Item(("b", 3), Item(("a", 5), Empty)) in
   print_endline (string_of_bool (mem_assq key l1));
   print_endline (string_of_bool (mem_assq key l2));
+  
+  print_endline "Test remove_assq:";
+  let l3 = remove_assq key l1 in
+  let l4 = remove_assq key l2 in
+  print_list_of_tuple_str l3;
+  print_endline "";
+  print_list_of_tuple_str l4;
+  print_endline "";

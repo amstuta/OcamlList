@@ -229,3 +229,16 @@ let rec mem_assq key = function
        if a == key then true
        else mem_assq key tl
      end
+
+       
+(* List.remove_assq *)
+let remove_assq key my_list =
+  let rec remove_assq_in e = function
+    | Empty	    -> rev e
+    | Item (hd, tl) ->
+       begin
+	 let a = (function (a, b) -> a) hd in
+	 if a == key then remove_assq_in e tl
+	 else remove_assq_in (Item (hd, e)) tl
+       end
+  in remove_assq_in Empty my_list
