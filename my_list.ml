@@ -24,7 +24,7 @@ let rec tl = function
 (* List.nth *)
 let rec nth my_list idx =
   let len = length my_list in
-  if idx < 0 then raise (Invalid_argument "List.nth")
+  if idx < 0 then raise (Invalid_argument "My_list.nth")
   else if idx >= len then raise (Failure "nth")
   else
     match idx with
@@ -178,3 +178,50 @@ let remove_assoc key my_list =
 	 else remove_assoc_in (Item (hd, e)) tl
        end
   in remove_assoc_in Empty my_list
+
+  
+(* ------------------------ BONUS -------------------------- *)
+
+(* List.fold_right *)
+let fold_right f a my_list =
+  fold_left f a (rev my_list)
+(*	    
+(* List.iter2 *)
+let rec iter2 f l1 l2 =
+  let len1 = length l1 in
+  let len2 = length l2 in
+  if len1 <> len2 then raise (Invalid_argument "My_list.iter2")
+  else
+    match l1 with
+    | Empty	    -> ()
+    | Item (hd, tl) ->
+       begin
+	 f hd (hd l2);
+	 (*iter2 f tl (tl l2)*)
+	 iter2 f tl
+       end
+ *)
+
+let map2 f l1 l2 =
+  let len1 = length l1 in
+  let len2 = length l2 in
+  if len1 <> len2 then raise (Invalid_argument "My_list.iter2")
+  else
+    let rec map2_in elem = function
+      | Empty  	      -> elem
+      | Item (hd, tl) -> map2_in (Item (hd, elem)) tl
+    in map2_in Empty l1
+
+let partition f my_list =
+  let rec partition_in elem = function
+    | Empty	    -> elem
+    | Item (hd, tl) ->
+       begin
+	 let b = f hd in
+	 let lT = (function (a, b) -> a) elem in
+	 let lF = (function (a, b) -> b) elem in
+	 if b = true then partition_in ((Item (hd, lT)), lF) tl
+	 else partition_in (lT, (Item (hd, lF))) tl
+       end
+  in partition_in (Empty, Empty) my_list
+

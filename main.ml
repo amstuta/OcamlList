@@ -53,7 +53,7 @@ let diff_0 a = a <> 0;;
 let main =
   let a = Item(0, Item(1, Item(2, Item(3, Empty)))) in
   let e = Item("a", Item("b", Item("c", Empty))) in
-	    
+
   print_endline "Test length:";
   let b = length a in
   print_int b;
@@ -164,4 +164,9 @@ let main =
   print_endline "Test remove_assoc:";
   let ac = remove_assoc 3 z in
   print_list_of_tuple ac;
+  print_endline "";
+
+  print_endline "Test fold_right:";
+  let ad = fold_right add 9 a in
+  print_int ad;
   print_endline "";
