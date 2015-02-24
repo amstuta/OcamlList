@@ -172,12 +172,13 @@ let remove_assoc key my_list =
     | Item (hd, tl) ->
        begin
 	 let a = (function (a, b) -> a) hd in
-	 if a = key then remove_assoc_in e tl
+	 if a = key then append e tl
 	 else remove_assoc_in (Item (hd, e)) tl
        end
   in remove_assoc_in Empty my_list
 
-  
+
+		     
 (* ------------------------ BONUS -------------------------- *)
 
 (* List.fold_right *)
@@ -238,7 +239,19 @@ let remove_assq key my_list =
     | Item (hd, tl) ->
        begin
 	 let a = (function (a, b) -> a) hd in
-	 if a == key then remove_assq_in e tl
+	 if a == key then append e tl
 	 else remove_assq_in (Item (hd, e)) tl
        end
   in remove_assq_in Empty my_list
+
+(* List.remove_all_assoc *)
+let remove_all_assoc key my_list =
+  let rec remove_all_assoc_in e = function
+    | Empty	    -> rev e
+    | Item (hd, tl) ->
+       begin
+	 let a = (function (a, b) -> a) hd in
+	 if a = key then remove_all_assoc_in e tl
+	 else remove_all_assoc_in (Item (hd, e)) tl
+       end
+  in remove_all_assoc_in Empty my_list

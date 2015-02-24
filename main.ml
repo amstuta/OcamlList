@@ -170,7 +170,7 @@ let main =
   print_endline "";
   
   print_endline "Test mem_assoc:";
-  let z = Item((1, 2), Item((3,4), Empty)) in
+  let z = Item((1, 2), Item((3, 4), Item((3, 5), Empty))) in
   print_endline (string_of_bool (mem_assoc 3 z));
 
   print_endline "Test assoc:";
@@ -214,7 +214,7 @@ let main =
   print_endline "Test mem_assq:";
   let key = "a" in
   let tpl = (key, 2) in
-  let l1 = Item(("b", 3), Item(tpl, Item(("c", 3), Empty))) in
+  let l1 = Item(("b", 3), Item(tpl, Item(("c", 3), Item(tpl ,Empty)))) in
   let l2 = Item(("b", 3), Item(("a", 5), Empty)) in
   print_endline (string_of_bool (mem_assq key l1));
   print_endline (string_of_bool (mem_assq key l2));
@@ -225,4 +225,9 @@ let main =
   print_list_of_tuple_str l3;
   print_endline "";
   print_list_of_tuple_str l4;
+  print_endline "";
+
+  print_endline "Test remove_all_assoc:";
+  let l5 = remove_all_assoc 3 z in
+  print_list_of_tuple l5;
   print_endline "";
