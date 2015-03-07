@@ -237,9 +237,3 @@ let main =
   let l5 = remove_all_assoc 3 z in
   print_list_of_tuple l5;
   print_endline "";
-
-  print_endline "Test sort:";
-  let l6 = Item(2, Item(1, Item(7, Item(5, Item(9, Empty))))) in
-  let l7 = sort my_compare_int l6 in
-  print_list_int l7;
-  print_endline "";
