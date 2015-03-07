@@ -55,12 +55,18 @@ let rec print_list_of_tuple_str my_list =
        print_list_of_tuple_str tl
      end
 
+(* Prints a string/int couple *)
 let print_couple a b =
   print_int a;
   print_string " : ";
   print_int b;
   print_endline "";;
 
+let my_compare_int a b =
+  if a == b then 0
+  else if a > b then 1
+  else -1
+  
 (* Add a et b *)
 let add a b = a + b;;
 
@@ -230,4 +236,10 @@ let main =
   print_endline "Test remove_all_assoc:";
   let l5 = remove_all_assoc 3 z in
   print_list_of_tuple l5;
+  print_endline "";
+
+  print_endline "Test sort:";
+  let l6 = Item(2, Item(1, Item(7, Item(5, Item(9, Empty))))) in
+  let l7 = sort my_compare_int l6 in
+  print_list_int l7;
   print_endline "";
