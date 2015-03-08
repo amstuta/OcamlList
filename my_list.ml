@@ -3,8 +3,6 @@ type 'a my_list =
   | Item of ('a * 'a my_list)
   | Empty
 
-
-
       
 (* List.length *)
 let rec length = function
@@ -229,7 +227,6 @@ let rec mem_assq key = function
        if a == key then true
        else mem_assq key tl
      end
-
        
 (* List.remove_assq *)
 let remove_assq key my_list =
@@ -253,4 +250,4 @@ let remove_all_assoc key my_list =
 	 if a = key then remove_all_assoc_in e tl
 	 else remove_all_assoc_in (Item (hd, e)) tl
        end
-  in remove_all_assoc_in Empty my_list
+  in remove_all_assoc_in Empty my_list;;
